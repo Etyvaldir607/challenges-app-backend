@@ -19,3 +19,6 @@ sail up -d
 php artisan migrate
 sail artisan migrate (optional)
 
+# execute test from php or sail
+php artisan test
+sail artisan test (optional)
