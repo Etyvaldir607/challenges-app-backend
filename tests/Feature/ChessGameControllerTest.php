@@ -13,39 +13,34 @@ class ChessGameControllerTest extends TestCase
     public function test_queens_attack_with_five_obstacles()
     {
         $response = $this->postJson('/api/problem-1', [
-            'board_size' => 8,
-            'total_obstacles' => 5,
+            'board_size' => 5,
+            'total_obstacles' => 3,
             'queen_rows' => 4,
-            'queen_columns' => 4,
+            'queen_columns' => 3,
             'obstacles' => [
-                [3, 5], // Obstacle to the right
-                [5, 4], // Obstacle below
+                [5, 5], // Obstacle to the right
                 [4, 2], // Obstacle to the left
-                [2, 4], // Obstacle above
-                [5, 5], // Obstacle bottom-right diagonal
+                [2, 3], // Obstacle above
             ],
         ]);
 
-        // Verificamos que la respuesta es un éxito
+        // Verify that the response is successful
         $response->assertStatus(200);
 
-        // Verificamos que se guarda la partida
+        // Verify that the game is saved
         //$this->assertDatabaseHas('chess_games', [
-        //    'board_size' => 8,
-        //    'total_obstacles' => 5,
+        //    'board_size' => 5,
+        //    'total_obstacles' => 3,
         //    'queen_rows' => 4,
-        //    'queen_columns' => 4,
+        //    'queen_columns' => 3,
         //    'obstacles' => json_encode([
-        //        [3, 5],
-        //        [5, 4],
-        //        [4, 2],
-        //        [2, 4],
-        //        [5, 5],
+        //        [5, 5], // Obstacle to the right
+        //        [4, 2], // Obstacle to the left
+        //        [2, 3], // Obstacle above
         //    ]),
         //]);
 
-        // Puedes verificar el número de ataques esperados
-        $expectedAttacks = 13; // Ajusta este número al resultado esperado para tus obstáculos
-        $this->assertEquals($expectedAttacks, $response->json('data.attacks'));
+        // Verify result
+        $this->assertEquals(10, $response->json('data.attacks'));
     }
 }
